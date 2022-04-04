@@ -1,0 +1,15 @@
+# Misc
+.github
+.next
+.vscode
+
+# Unit tests
+coverage
+__test__
+
+# e2e Tests
+cypress
+cypress.json
+coverage-e2e
+.nycrc
+.nyc_output

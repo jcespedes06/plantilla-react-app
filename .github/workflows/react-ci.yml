@@ -1,0 +1,39 @@
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+env:
+  SKIP_TEST: 'false'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x] ## Siempre se recomienda la versión lts
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: architecture-it/actions@react-base
+      with:
+        matrix_version: ${{ matrix.node-version }}
+        skip_test: ${{ env.SKIP_TEST }}
+        packages_token: ${{ secrets.ARQUITECTURA_DEPLOY }}
+        # Recomendamos que ci esté activado, 
+        # Ya que comprueba que eslint no rompa para prd
+        # ci: true 
+  sonarqube:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: SonarQube Analyzer
+        uses: architecture-it/actions@sonarqube
+        with:
+          sonar_url: ${{ secrets.SONAR_HOST_URL }}
+          sonar_token: ${{ secrets.SONAR_TOKEN }}
+          skip_test: ${{ env.SKIP_TEST }}
+          sonar_code: 'Js'
