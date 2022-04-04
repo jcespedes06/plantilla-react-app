@@ -15,7 +15,8 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          <h2>{ window.__RUNTIME_CONFIG__.REACT_APP_VARIABLE_UNO }</h2>
+          <h2>{ window.__RUNTIME_CONFIG__.REACT_APP_VARIABLE_DOS }</h2>
         </a>
       </header>
     </div>
